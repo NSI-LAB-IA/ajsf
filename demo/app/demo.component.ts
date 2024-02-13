@@ -1,12 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { MatLegacyMenuTrigger as MatMenuTrigger } from "@angular/material/legacy-menu";
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-} from "@angular/animations";
+import { trigger, state, style, animate, transition } from "@angular/animations";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 
@@ -21,10 +15,7 @@ import { JsonPointer } from "@ajsf/core";
     trigger("expandSection", [
       state("in", style({ height: "*" })),
       transition(":enter", [style({ height: 0 }), animate(100)]),
-      transition(":leave", [
-        style({ height: "*" }),
-        animate(100, style({ height: 0 })),
-      ]),
+      transition(":leave", [style({ height: "*" }), animate(100, style({ height: 0 }))]),
     ]),
   ],
 })
@@ -40,13 +31,7 @@ export class DemoComponent implements OnInit {
     pt: "Portuguese",
     zh: "Chinese",
   };
-  frameworkList: any = [
-    "material-design",
-    "bootstrap-3",
-    "bootstrap-4",
-    "bootstrap-5",
-    "no-framework",
-  ];
+  frameworkList: any = ["material-design", "bootstrap-3", "bootstrap-4", "bootstrap-5", "no-framework"];
   frameworks: any = {
     "material-design": "Material Design",
     "bootstrap-3": "Bootstrap 3",
@@ -95,7 +80,7 @@ export class DemoComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -113,7 +98,7 @@ export class DemoComponent implements OnInit {
       if (params["example"]) {
         this.selectedExample = params["example"];
         this.selectedExampleName = this.examples[this.selectedSet].schemas.find(
-          (schema) => schema.file === this.selectedExample
+          (schema) => schema.file === this.selectedExample,
         ).name;
       }
       if (params["framework"]) {
@@ -176,7 +161,7 @@ export class DemoComponent implements OnInit {
     selectedSet: string = this.selectedSet,
     selectedSetName: string = this.selectedSetName,
     selectedExample: string = this.selectedExample,
-    selectedExampleName: string = this.selectedExampleName
+    selectedExampleName: string = this.selectedExampleName,
   ) {
     if (this.menuTrigger.menuOpen) {
       this.menuTrigger.closeMenu();
@@ -195,7 +180,7 @@ export class DemoComponent implements OnInit {
           "&framework=" +
           this.selectedFramework +
           "&language=" +
-          this.selectedLanguage
+          this.selectedLanguage,
       );
       this.liveFormData = {};
       this.submittedFormData = null;
@@ -261,8 +246,7 @@ export class DemoComponent implements OnInit {
 
   toggleFormOption(option: string) {
     if (option === "feedback") {
-      this.jsonFormOptions.defaultWidgetOptions.feedback =
-        !this.jsonFormOptions.defaultWidgetOptions.feedback;
+      this.jsonFormOptions.defaultWidgetOptions.feedback = !this.jsonFormOptions.defaultWidgetOptions.feedback;
     } else {
       this.jsonFormOptions[option] = !this.jsonFormOptions[option];
     }

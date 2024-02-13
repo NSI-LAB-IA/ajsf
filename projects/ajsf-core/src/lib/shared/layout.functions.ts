@@ -60,7 +60,7 @@ export function buildLayout(jsf, widgetLibrary) {
               "recursiveReference",
               "type",
               "widget",
-            ])
+            ]),
         )
         .forEach((option) => {
           newNode.options[option] = newNode[option];
@@ -95,40 +95,40 @@ export function buildLayout(jsf, widgetLibrary) {
                 code === "0"
                   ? "type"
                   : code === "1"
-                  ? "enum"
-                  : code === "100"
-                  ? "multipleOf"
-                  : code === "101"
-                  ? "minimum"
-                  : code === "102"
-                  ? "exclusiveMinimum"
-                  : code === "103"
-                  ? "maximum"
-                  : code === "104"
-                  ? "exclusiveMaximum"
-                  : code === "200"
-                  ? "minLength"
-                  : code === "201"
-                  ? "maxLength"
-                  : code === "202"
-                  ? "pattern"
-                  : code === "300"
-                  ? "minProperties"
-                  : code === "301"
-                  ? "maxProperties"
-                  : code === "302"
-                  ? "required"
-                  : code === "304"
-                  ? "dependencies"
-                  : code === "400"
-                  ? "minItems"
-                  : code === "401"
-                  ? "maxItems"
-                  : code === "402"
-                  ? "uniqueItems"
-                  : code === "500"
-                  ? "format"
-                  : code + "";
+                    ? "enum"
+                    : code === "100"
+                      ? "multipleOf"
+                      : code === "101"
+                        ? "minimum"
+                        : code === "102"
+                          ? "exclusiveMinimum"
+                          : code === "103"
+                            ? "maximum"
+                            : code === "104"
+                              ? "exclusiveMaximum"
+                              : code === "200"
+                                ? "minLength"
+                                : code === "201"
+                                  ? "maxLength"
+                                  : code === "202"
+                                    ? "pattern"
+                                    : code === "300"
+                                      ? "minProperties"
+                                      : code === "301"
+                                        ? "maxProperties"
+                                        : code === "302"
+                                          ? "required"
+                                          : code === "304"
+                                            ? "dependencies"
+                                            : code === "400"
+                                              ? "minItems"
+                                              : code === "401"
+                                                ? "maxItems"
+                                                : code === "402"
+                                                  ? "uniqueItems"
+                                                  : code === "500"
+                                                    ? "format"
+                                                    : code + "";
               newNode.options.validationMessages[newKey] = newNode.options.validationMessage[key];
             });
           }
@@ -221,7 +221,7 @@ export function buildLayout(jsf, widgetLibrary) {
           const oldWidgetType = newNode.type;
           newNode.type = getInputType(nodeSchema, newNode);
           console.error(
-            `error: widget type "${oldWidgetType}" ` + `not found in library. Replacing with "${newNode.type}".`
+            `error: widget type "${oldWidgetType}" ` + `not found in library. Replacing with "${newNode.type}".`,
           );
         } else {
           newNode.type = checkInlineType(newNode.type, nodeSchema, newNode);
@@ -240,7 +240,7 @@ export function buildLayout(jsf, widgetLibrary) {
           newNode.options.minItems = Math.max(nodeSchema.minItems || 0, newNode.options.minItems || 0);
           newNode.options.listItems = Math.max(
             newNode.options.listItems || 0,
-            Array.isArray(nodeValue) ? nodeValue.length : 0
+            Array.isArray(nodeValue) ? nodeValue.length : 0,
           );
           newNode.options.tupleItems = Array.isArray(nodeSchema.items) ? nodeSchema.items.length : 0;
           if (newNode.options.maxItems < newNode.options.tupleItems) {
@@ -280,7 +280,7 @@ export function buildLayout(jsf, widgetLibrary) {
         }
         if (Array.isArray(newNode.options.copyValueTo)) {
           newNode.options.copyValueTo = newNode.options.copyValueTo.map((item) =>
-            JsonPointer.compile(JsonPointer.parseObjectPath(item), "-")
+            JsonPointer.compile(JsonPointer.parseObjectPath(item), "-"),
           );
         }
       }
@@ -293,7 +293,7 @@ export function buildLayout(jsf, widgetLibrary) {
         const itemRefPointer = removeRecursiveReferences(
           newNode.dataPointer + "/-",
           jsf.dataRecursiveRefMap,
-          jsf.arrayMap
+          jsf.arrayMap,
         );
         if (!jsf.dataMap.has(itemRefPointer)) {
           jsf.dataMap.set(itemRefPointer, new Map());
@@ -372,7 +372,7 @@ export function buildLayout(jsf, widgetLibrary) {
                 }
               }
             },
-            "top-down"
+            "top-down",
           );
         }
 
@@ -381,9 +381,9 @@ export function buildLayout(jsf, widgetLibrary) {
           const arrayLength = Math.min(
             Math.max(
               newNode.options.tupleItems + newNode.options.listItems,
-              Array.isArray(nodeValue) ? nodeValue.length : 0
+              Array.isArray(nodeValue) ? nodeValue.length : 0,
             ),
-            newNode.options.maxItems
+            newNode.options.maxItems,
           );
           for (let i = newNode.items.length; i < arrayLength; i++) {
             newNode.items.push(
@@ -394,8 +394,8 @@ export function buildLayout(jsf, widgetLibrary) {
                   recursiveReference: newNode.recursiveReference,
                 },
                 jsf,
-                widgetLibrary
-              )
+                widgetLibrary,
+              ),
             );
           }
         }
@@ -527,7 +527,7 @@ export function buildLayoutFromSchema(
   arrayItemType: string = null,
   removable: boolean = null,
   forRefLibrary = false,
-  dataPointerPrefix = ""
+  dataPointerPrefix = "",
 ) {
   const schema = JsonPointer.get(jsf.schema, schemaPointer);
   if (!hasOwn(schema, "type") && !hasOwn(schema, "$ref") && !hasOwn(schema, "x-schema-form")) {
@@ -562,7 +562,7 @@ export function buildLayoutFromSchema(
   const shortDataPointer = removeRecursiveReferences(
     dataPointerPrefix + dataPointer,
     jsf.dataRecursiveRefMap,
-    jsf.arrayMap
+    jsf.arrayMap,
   );
   const recursive = !shortDataPointer.length || shortDataPointer !== dataPointerPrefix + dataPointer;
   if (!jsf.dataMap.has(shortDataPointer)) {
@@ -609,7 +609,7 @@ export function buildLayoutFromSchema(
             null,
             null,
             forRefLibrary,
-            dataPointerPrefix
+            dataPointerPrefix,
           );
           if (innerItem) {
             if (isInputRequired(schema, "/" + key)) {
@@ -668,7 +668,7 @@ export function buildLayoutFromSchema(
         const itemRefPointer = removeRecursiveReferences(
           shortDataPointer + "/" + i,
           jsf.dataRecursiveRefMap,
-          jsf.arrayMap
+          jsf.arrayMap,
         );
         const itemRecursive = !itemRefPointer.length || itemRefPointer !== shortDataPointer + "/" + i;
 
@@ -687,7 +687,7 @@ export function buildLayoutFromSchema(
               "tuple",
               true,
               true,
-              itemRecursive ? dataPointer + "/" + i : ""
+              itemRecursive ? dataPointer + "/" + i : "",
             );
             if (itemRecursive) {
               jsf.layoutRefLibrary[itemRefPointer].recursiveReference = true;
@@ -701,7 +701,7 @@ export function buildLayoutFromSchema(
             },
             jsf,
             widgetLibrary,
-            Array.isArray(nodeValue) ? nodeValue[i] : null
+            Array.isArray(nodeValue) ? nodeValue[i] : null,
           );
         } else {
           newItem = buildLayoutFromSchema(
@@ -714,7 +714,7 @@ export function buildLayoutFromSchema(
             "tuple",
             false,
             forRefLibrary,
-            dataPointerPrefix
+            dataPointerPrefix,
           );
         }
         if (newItem) {
@@ -738,7 +738,7 @@ export function buildLayoutFromSchema(
       const itemSchemaPointer = removeRecursiveReferences(
         additionalItemsSchemaPointer,
         jsf.schemaRecursiveRefMap,
-        jsf.arrayMap
+        jsf.arrayMap,
       );
       // Add list item layout to layoutRefLibrary
       if (itemRefPointer.length && !hasOwn(jsf.layoutRefLibrary, itemRefPointer)) {
@@ -754,7 +754,7 @@ export function buildLayoutFromSchema(
           "list",
           removable,
           true,
-          itemRecursive ? dataPointer + "/-" : ""
+          itemRecursive ? dataPointer + "/-" : "",
         );
         if (itemRecursive) {
           jsf.layoutRefLibrary[itemRefPointer].recursiveReference = true;
@@ -766,9 +766,9 @@ export function buildLayoutFromSchema(
         const arrayLength = Math.min(
           Math.max(
             itemRecursive ? 0 : newNode.options.tupleItems + newNode.options.listItems,
-            Array.isArray(nodeValue) ? nodeValue.length : 0
+            Array.isArray(nodeValue) ? nodeValue.length : 0,
           ),
-          newNode.options.maxItems
+          newNode.options.maxItems,
         );
         if (newNode.items.length < arrayLength) {
           for (let i = newNode.items.length; i < arrayLength; i++) {
@@ -781,8 +781,8 @@ export function buildLayoutFromSchema(
                 },
                 jsf,
                 widgetLibrary,
-                Array.isArray(nodeValue) ? nodeValue[i] : null
-              )
+                Array.isArray(nodeValue) ? nodeValue[i] : null,
+              ),
             );
           }
         }
@@ -871,7 +871,7 @@ export function buildLayoutFromSchema(
           newNode.arrayItemType,
           true,
           true,
-          dataPointer
+          dataPointer,
         );
         if (newLayout) {
           newLayout.recursiveReference = true;
@@ -983,7 +983,7 @@ export function getLayoutNode(refNode, jsf, widgetLibrary: any = null, nodeValue
         newLayoutNode.arrayItem,
         newLayoutNode.arrayItemType,
         newLayoutNode.options.removable,
-        false
+        false,
       );
     } else {
       // If value not defined, copy node from layoutRefLibrary

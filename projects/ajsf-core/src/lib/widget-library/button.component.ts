@@ -16,7 +16,9 @@ import { JsonSchemaFormService } from "../json-schema-form.service";
       [value]="controlValue"
       (click)="updateValue($event)"
     >
-      <span *ngIf="options?.icon || options?.title" [class]="options?.icon" [innerHTML]="options?.title"></span>
+      @if (options?.icon || options?.title) {
+        <span [class]="options?.icon" [innerHTML]="options?.title"></span>
+      }
     </button>
   </div>`,
 })

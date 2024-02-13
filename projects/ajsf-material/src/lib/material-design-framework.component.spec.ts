@@ -1,28 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import {
-  JsonSchemaFormModule,
-  JsonSchemaFormService,
-  WidgetLibraryModule
-} from '@ajsf/core';
-import { MaterialDesignFrameworkComponent } from './material-design-framework.component';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { CommonModule } from "@angular/common";
+import { JsonSchemaFormModule, JsonSchemaFormService, WidgetLibraryModule } from "@ajsf/core";
+import { MaterialDesignFrameworkComponent } from "./material-design-framework.component";
 
-
-describe('MaterialDesignFrameworkComponent', () => {
+describe("MaterialDesignFrameworkComponent", () => {
   let component: MaterialDesignFrameworkComponent;
   let fixture: ComponentFixture<MaterialDesignFrameworkComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        JsonSchemaFormModule,
-        CommonModule,
-        WidgetLibraryModule,
-      ],
+      imports: [JsonSchemaFormModule, CommonModule, WidgetLibraryModule],
       declarations: [MaterialDesignFrameworkComponent],
-      providers: [JsonSchemaFormService]
-    })
-      .compileComponents();
+      providers: [JsonSchemaFormService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -34,7 +24,7 @@ describe('MaterialDesignFrameworkComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

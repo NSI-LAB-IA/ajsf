@@ -26,7 +26,10 @@ export class Bootstrap3FrameworkComponent implements OnInit, OnChanges {
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
 
-  constructor(public changeDetector: ChangeDetectorRef, public jsf: JsonSchemaFormService) {}
+  constructor(
+    public changeDetector: ChangeDetectorRef,
+    public jsf: JsonSchemaFormService,
+  ) {}
 
   get showRemoveButton(): boolean {
     if (!this.options.removable || this.options.readonly || this.layoutNode.type === "$ref") {
@@ -42,10 +45,10 @@ export class Bootstrap3FrameworkComponent implements OnInit, OnChanges {
     return this.parentArray.items.length - 1 <= this.parentArray.options.minItems
       ? false
       : // For removable list items, allow removing any item
-      this.layoutNode.arrayItemType === "list"
-      ? true
-      : // For removable tuple items, only allow removing last item in list
-        this.layoutIndex[this.layoutIndex.length - 1] === this.parentArray.items.length - 2;
+        this.layoutNode.arrayItemType === "list"
+        ? true
+        : // For removable tuple items, only allow removing last item in list
+          this.layoutIndex[this.layoutIndex.length - 1] === this.parentArray.items.length - 2;
   }
 
   ngOnInit() {
@@ -117,8 +120,8 @@ export class Bootstrap3FrameworkComponent implements OnInit, OnChanges {
           this.layoutNode.type === "array"
             ? addClasses(this.options.htmlClass, "list-group")
             : this.layoutNode.arrayItem && this.layoutNode.type !== "$ref"
-            ? addClasses(this.options.htmlClass, "list-group-item")
-            : addClasses(this.options.htmlClass, "form-group");
+              ? addClasses(this.options.htmlClass, "list-group-item")
+              : addClasses(this.options.htmlClass, "form-group");
       }
       this.widgetOptions.htmlClass = "";
       this.options.labelHtmlClass = addClasses(this.options.labelHtmlClass, "control-label");
@@ -163,7 +166,7 @@ export class Bootstrap3FrameworkComponent implements OnInit, OnChanges {
           this.widgetOptions.itemLabelHtmlClass = addClasses(this.widgetOptions.itemLabelHtmlClass, "btn");
           this.widgetOptions.itemLabelHtmlClass = addClasses(
             this.widgetOptions.itemLabelHtmlClass,
-            this.options.style || "btn-default"
+            this.options.style || "btn-default",
           );
           this.widgetOptions.fieldHtmlClass = addClasses(this.widgetOptions.fieldHtmlClass, "sr-only");
           break;
@@ -173,7 +176,7 @@ export class Bootstrap3FrameworkComponent implements OnInit, OnChanges {
           this.widgetOptions.fieldHtmlClass = addClasses(this.widgetOptions.fieldHtmlClass, "btn");
           this.widgetOptions.fieldHtmlClass = addClasses(
             this.widgetOptions.fieldHtmlClass,
-            this.options.style || "btn-info"
+            this.options.style || "btn-info",
           );
           break;
         // Containers - arrays and fieldsets
@@ -198,7 +201,7 @@ export class Bootstrap3FrameworkComponent implements OnInit, OnChanges {
           this.widgetOptions.fieldHtmlClass = addClasses(this.widgetOptions.fieldHtmlClass, "btn pull-right");
           this.widgetOptions.fieldHtmlClass = addClasses(
             this.widgetOptions.fieldHtmlClass,
-            this.options.style || "btn-default"
+            this.options.style || "btn-default",
           );
           this.options.icon = "glyphicon glyphicon-plus";
           break;

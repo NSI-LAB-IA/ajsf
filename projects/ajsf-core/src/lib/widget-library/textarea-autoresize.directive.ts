@@ -17,9 +17,7 @@ const MAX_LOOKUP_RETRIES = 3;
 @Directive({
   selector: "[textareaAutoresize]",
 })
-export class TextareaAutoresizeDirective
-  implements OnDestroy, OnChanges, AfterContentChecked
-{
+export class TextareaAutoresizeDirective implements OnDestroy, OnChanges, AfterContentChecked {
   @Input()
   set minRows(value) {
     this._minRows = value;
@@ -57,7 +55,7 @@ export class TextareaAutoresizeDirective
   constructor(
     public element: ElementRef,
     private _window: WindowRef,
-    private _zone: NgZone
+    private _zone: NgZone,
   ) {
     if (this.element.nativeElement.tagName !== "TEXTAREA") {
       this._findNestedTextArea();
@@ -71,11 +69,7 @@ export class TextareaAutoresizeDirective
   ngOnDestroy() {
     this._destroyed = true;
     if (this._windowResizeHandler) {
-      this._window.nativeWindow.removeEventListener(
-        "resize",
-        this._windowResizeHandler,
-        false
-      );
+      this._window.nativeWindow.removeEventListener("resize", this._windowResizeHandler, false);
     }
   }
 
@@ -91,8 +85,7 @@ export class TextareaAutoresizeDirective
     this.textAreaEl = this.element.nativeElement.querySelector("TEXTAREA");
 
     if (!this.textAreaEl && this.element.nativeElement.shadowRoot) {
-      this.textAreaEl =
-        this.element.nativeElement.shadowRoot.querySelector("TEXTAREA");
+      this.textAreaEl = this.element.nativeElement.shadowRoot.querySelector("TEXTAREA");
     }
 
     if (!this.textAreaEl) {
@@ -127,21 +120,12 @@ export class TextareaAutoresizeDirective
     // }, 200);
 
     this._zone.runOutsideAngular(() => {
-      this._window.nativeWindow.addEventListener(
-        "resize",
-        this._windowResizeHandler,
-        false
-      );
+      this._window.nativeWindow.addEventListener("resize", this._windowResizeHandler, false);
     });
   }
 
   adjust(inputsChanged = false): void {
-    if (
-      this.autosize &&
-      !this._destroyed &&
-      this.textAreaEl &&
-      this.textAreaEl.parentNode
-    ) {
+    if (this.autosize && !this._destroyed && this.textAreaEl && this.textAreaEl.parentNode) {
       const currentText = this.textAreaEl.value;
 
       if (
@@ -170,10 +154,7 @@ export class TextareaAutoresizeDirective
       let height = clone.scrollHeight;
 
       // add into height top and bottom borders' width
-      let computedStyle = this._window.nativeWindow.getComputedStyle(
-        clone,
-        null
-      );
+      let computedStyle = this._window.nativeWindow.getComputedStyle(clone, null);
       height += parseInt(computedStyle.getPropertyValue("border-top-width"));
       height += parseInt(computedStyle.getPropertyValue("border-bottom-width"));
 
@@ -214,16 +195,12 @@ export class TextareaAutoresizeDirective
   private _getLineHeight() {
     let lineHeight = parseInt(this.textAreaEl.style.lineHeight, 10);
     if (isNaN(lineHeight) && this._window.nativeWindow.getComputedStyle) {
-      const styles = this._window.nativeWindow.getComputedStyle(
-        this.textAreaEl
-      );
+      const styles = this._window.nativeWindow.getComputedStyle(this.textAreaEl);
       lineHeight = parseInt(styles.lineHeight, 10);
     }
 
     if (isNaN(lineHeight)) {
-      const fontSize = this._window.nativeWindow
-        .getComputedStyle(this.textAreaEl, null)
-        .getPropertyValue("font-size");
+      const fontSize = this._window.nativeWindow.getComputedStyle(this.textAreaEl, null).getPropertyValue("font-size");
       lineHeight = Math.floor(parseInt(fontSize.replace("px", ""), 10) * 1.5);
     }
 

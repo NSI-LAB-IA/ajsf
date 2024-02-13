@@ -189,7 +189,7 @@ export function convertSchemaToDraft6(schema, options: OptionObject = {}) {
         .forEach(
           (key) =>
             (dependencies[key] =
-              typeof properties[key].requires === "string" ? [properties[key].requires] : properties[key].requires)
+              typeof properties[key].requires === "string" ? [properties[key].requires] : properties[key].requires),
         );
       newSchema.dependencies = dependencies;
       changed = true;
@@ -312,7 +312,7 @@ export function convertSchemaToDraft6(schema, options: OptionObject = {}) {
               .filter(
                 (key) =>
                   !newType.hasOwnProperty(key) &&
-                  ![...(filterKeys[newType.type] || filterKeys.all), "type", "default"].includes(key)
+                  ![...(filterKeys[newType.type] || filterKeys.all), "type", "default"].includes(key),
               )
               .forEach((key) => (newType[key] = newSchema[key]));
             anyOf.push(newType);
@@ -340,7 +340,7 @@ export function convertSchemaToDraft6(schema, options: OptionObject = {}) {
       ) {
         const newKey = {};
         Object.keys(newSchema[key]).forEach(
-          (subKey) => (newKey[subKey] = convertSchemaToDraft6(newSchema[key][subKey], { changed, draft }))
+          (subKey) => (newKey[subKey] = convertSchemaToDraft6(newSchema[key][subKey], { changed, draft })),
         );
         newSchema[key] = newKey;
       } else if (["items", "additionalItems", "additionalProperties", "allOf", "anyOf", "oneOf", "not"].includes(key)) {

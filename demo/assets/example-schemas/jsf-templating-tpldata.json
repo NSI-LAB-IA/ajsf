@@ -5,10 +5,12 @@
       "title": "Age"
     }
   },
-  "form": [ {
-    "key": "age",
-    "title": "{{user.name}}'s age"
-  } ],
+  "form": [
+    {
+      "key": "age",
+      "title": "{{user.name}}'s age"
+    }
+  ],
   "tpldata": {
     "user": { "name": "tidoust" }
   }

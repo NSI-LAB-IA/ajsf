@@ -64,7 +64,7 @@ export function mergeSchemas(...schemas) {
             // Keep only items that appear in both arrays
             if (Array.isArray(combinedValue) && Array.isArray(schemaValue)) {
               combinedSchema[key] = combinedValue.filter(
-                (item1) => schemaValue.findIndex((item2) => isEqual(item1, item2)) > -1
+                (item1) => schemaValue.findIndex((item2) => isEqual(item1, item2)) > -1,
               );
               if (!combinedSchema[key].length) {
                 return { allOf: [...schemas] };
@@ -130,7 +130,7 @@ export function mergeSchemas(...schemas) {
             // If arrays, keep only items that appear in both arrays
             if (Array.isArray(combinedValue) && Array.isArray(schemaValue)) {
               combinedSchema.items = combinedValue.filter(
-                (item1) => schemaValue.findIndex((item2) => isEqual(item1, item2)) > -1
+                (item1) => schemaValue.findIndex((item2) => isEqual(item1, item2)) > -1,
               );
               if (!combinedSchema.items.length) {
                 return { allOf: [...schemas] };
@@ -190,7 +190,7 @@ export function mergeSchemas(...schemas) {
                   Array.isArray(notSchema.anyOf) && Object.keys(notSchema).length === 1
                     ? [...notAnyOfArray, ...notSchema.anyOf]
                     : [...notAnyOfArray, notSchema],
-                []
+                [],
               );
               // TODO: Remove duplicate items from array
               combinedSchema.not = { anyOf: notAnyOf };
@@ -235,7 +235,7 @@ export function mergeSchemas(...schemas) {
                     } else if (isObject(schemaValue.additionalProperties)) {
                       combinedObject[nonMatchingKey] = mergeSchemas(
                         combinedObject[nonMatchingKey],
-                        schemaValue.additionalProperties
+                        schemaValue.additionalProperties,
                       );
                     }
                   });

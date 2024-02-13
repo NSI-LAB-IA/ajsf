@@ -150,7 +150,7 @@ export class JsonPointer {
   private static doComparisonByExpressionType(
     expressionType: ExpressionType,
     propertyByKey,
-    cleanedValue: String
+    cleanedValue: String,
   ): Boolean {
     if (isEqual(expressionType)) {
       return propertyByKey === cleanedValue;
@@ -227,7 +227,7 @@ export class JsonPointer {
     startSlice: number = 0,
     endSlice: number | null = null,
     getBoolean: boolean = false,
-    errors = false
+    errors = false,
   ) {
     const objectToCopy = this.get(object, pointer, startSlice, endSlice, getBoolean, errors);
     return this.forEachDeepCopy(objectToCopy);
@@ -266,7 +266,7 @@ export class JsonPointer {
         }
         console.error(
           "getFirst error: Input not in correct format.\n" +
-            "Should be: [ [ object1, pointer1 ], [ object 2, pointer2 ], etc... ]"
+            "Should be: [ [ object1, pointer1 ], [ object 2, pointer2 ], etc... ]",
         );
         return;
       }
@@ -286,7 +286,7 @@ export class JsonPointer {
     }
     console.error(
       "getFirst error: Input not in correct format.\n" +
-        "Should be: [ [ object1, pointer1 ], [ object 2, pointer2 ], etc... ]"
+        "Should be: [ [ object1, pointer1 ], [ object 2, pointer2 ], etc... ]",
     );
     return defaultValue;
   }
@@ -536,7 +536,7 @@ export class JsonPointer {
     fn: (v: any, p?: string, o?: any) => any = (v) => v,
     bottomUp = false,
     pointer = "",
-    rootObject = object
+    rootObject = object,
   ) {
     if (typeof fn !== "function") {
       console.error(`forEachDeep error: Iterator is not a function:`, fn);
@@ -575,7 +575,7 @@ export class JsonPointer {
     fn: (v: any, p?: string, o?: any) => any = (v) => v,
     bottomUp = false,
     pointer = "",
-    rootObject = object
+    rootObject = object,
   ) {
     if (typeof fn !== "function") {
       console.error(`forEachDeepCopy error: Iterator is not a function:`, fn);
@@ -757,7 +757,7 @@ export class JsonPointer {
     shortPointer: Pointer,
     longPointer: Pointer,
     trueIfMatching: boolean = false,
-    errors: boolean = false
+    errors: boolean = false,
   ) {
     if (!this.isJsonPointer(shortPointer) || !this.isJsonPointer(longPointer)) {
       if (errors) {
@@ -800,7 +800,7 @@ export class JsonPointer {
       if (isMap(arrayMap)) {
         let arrayIndex = 0;
         return indexedPointer.replace(/\/\-(?=\/|$)/g, (key, stringIndex) =>
-          arrayMap.has((<string>indexedPointer).slice(0, stringIndex)) ? "/" + indexArray[arrayIndex++] : key
+          arrayMap.has((<string>indexedPointer).slice(0, stringIndex)) ? "/" + indexArray[arrayIndex++] : key,
         );
       } else {
         for (const pointerIndex of indexArray) {

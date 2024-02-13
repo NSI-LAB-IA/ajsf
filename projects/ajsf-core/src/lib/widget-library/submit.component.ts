@@ -45,7 +45,7 @@ export class SubmitComponent implements OnInit, OnDestroy {
     } else if (this.jsf.formOptions.disableInvalidSubmit) {
       this.controlDisabled = !this.jsf.isValid;
       this.isValidChangesSubs = this.isValidChangesSubs = this.jsf.isValidChanges.subscribe(
-        (isValid) => (this.controlDisabled = !isValid)
+        (isValid) => (this.controlDisabled = !isValid),
       );
     }
     if (this.controlValue === null || this.controlValue === undefined) {

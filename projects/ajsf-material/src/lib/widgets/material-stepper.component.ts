@@ -1,12 +1,12 @@
-import { AbstractControl } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
-import { JsonSchemaFormService } from '@ajsf/core';
+import { AbstractControl } from "@angular/forms";
+import { Component, Input, OnInit } from "@angular/core";
+import { JsonSchemaFormService } from "@ajsf/core";
 
 // TODO: Add this control
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'material-stepper-widget',
+  selector: "material-stepper-widget",
   template: ``,
 })
 export class MaterialStepperComponent implements OnInit {
@@ -20,9 +20,7 @@ export class MaterialStepperComponent implements OnInit {
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
 
-  constructor(
-    private jsf: JsonSchemaFormService
-  ) { }
+  constructor(private jsf: JsonSchemaFormService) {}
 
   ngOnInit() {
     this.options = this.layoutNode.options || {};

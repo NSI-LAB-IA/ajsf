@@ -1,13 +1,12 @@
-import { AbstractControl } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
-import { JsonSchemaFormService } from '../json-schema-form.service';
-
+import { AbstractControl } from "@angular/forms";
+import { Component, Input, OnInit } from "@angular/core";
+import { JsonSchemaFormService } from "../json-schema-form.service";
 
 // TODO: Add this control
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'file-widget',
+  selector: "file-widget",
   template: ``,
 })
 export class FileComponent implements OnInit {
@@ -21,9 +20,7 @@ export class FileComponent implements OnInit {
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
 
-  constructor(
-    private jsf: JsonSchemaFormService
-  ) { }
+  constructor(private jsf: JsonSchemaFormService) {}
 
   ngOnInit() {
     this.options = this.layoutNode.options || {};

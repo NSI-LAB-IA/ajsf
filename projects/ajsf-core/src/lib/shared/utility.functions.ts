@@ -28,7 +28,7 @@ import {
  */
 export function addClasses(
   oldClasses: string | string[] | Set<string>,
-  newClasses: string | string[] | Set<string>
+  newClasses: string | string[] | Set<string>,
 ): string | string[] | Set<string> {
   const badType = (i) => !isSet(i) && !Array.isArray(i) && !isString(i);
   if (badType(newClasses)) {
@@ -109,7 +109,7 @@ export function forEach(
   fn: (v: any, k?: string | number, c?: any, rc?: any) => any,
   recurse: boolean | string = false,
   rootObject: any = object,
-  errors = false
+  errors = false,
 ): void {
   if (isEmpty(object)) {
     return;
@@ -156,7 +156,7 @@ export function forEach(
 export function forEachCopy(
   object: any,
   fn: (v: any, k?: string | number, o?: any, p?: string) => any,
-  errors = false
+  errors = false,
 ): any {
   if (!hasValue(object)) {
     return;
@@ -294,7 +294,7 @@ export function mergeFilteredObject(
   sourceObject: PlainObject,
   excludeKeys = <string[]>[],
   keyFn = (key: string): string => key,
-  valFn = (val: any): any => val
+  valFn = (val: any): any => val,
 ): PlainObject {
   if (!isObject(sourceObject)) {
     return targetObject;

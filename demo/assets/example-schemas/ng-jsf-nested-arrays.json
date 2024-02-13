@@ -33,6 +33,6 @@
         "items": { "$ref": "#/definitions/tiers_obj", "extendRefs": true }
       }
     },
-    "required": [ "tiers" ]
+    "required": ["tiers"]
   }
 }

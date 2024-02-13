@@ -15,65 +15,69 @@ import { MAT_LEGACY_FORM_FIELD_DEFAULT_OPTIONS as MAT_FORM_FIELD_DEFAULT_OPTIONS
       [hideRequiredMarker]="options?.hideRequired ? 'true' : 'false'"
       [style.width]="'100%'"
     >
-      <mat-label *ngIf="!options?.notitle">{{ options?.title }}</mat-label>
-      <span
-        matPrefix
-        *ngIf="options?.prefix || options?.fieldAddonLeft"
-        [innerHTML]="options?.prefix || options?.fieldAddonLeft"
-      ></span>
-      <input
-        matInput
-        *ngIf="boundControl"
-        [formControl]="formControl"
-        [attr.aria-describedby]="'control' + layoutNode?._id + 'Status'"
-        [attr.list]="'control' + layoutNode?._id + 'Autocomplete'"
-        [attr.maxlength]="options?.maxLength"
-        [attr.minlength]="options?.minLength"
-        [attr.pattern]="options?.pattern"
-        [readonly]="options?.readonly ? 'readonly' : null"
-        [id]="'control' + layoutNode?._id"
-        [name]="controlName"
-        [placeholder]="options?.notitle ? options?.placeholder : options?.title"
-        [required]="options?.required"
-        [style.width]="'100%'"
-        [type]="layoutNode?.type"
-        (blur)="options.showErrors = true"
-      />
-      <input
-        matInput
-        *ngIf="!boundControl"
-        [attr.aria-describedby]="'control' + layoutNode?._id + 'Status'"
-        [attr.list]="'control' + layoutNode?._id + 'Autocomplete'"
-        [attr.maxlength]="options?.maxLength"
-        [attr.minlength]="options?.minLength"
-        [attr.pattern]="options?.pattern"
-        [disabled]="controlDisabled || options?.readonly"
-        [id]="'control' + layoutNode?._id"
-        [name]="controlName"
-        [placeholder]="options?.notitle ? options?.placeholder : options?.title"
-        [readonly]="options?.readonly ? 'readonly' : null"
-        [required]="options?.required"
-        [style.width]="'100%'"
-        [type]="layoutNode?.type"
-        [value]="controlValue"
-        (input)="updateValue($event)"
-        (blur)="options.showErrors = true"
-      />
-      <span
-        matSuffix
-        *ngIf="options?.suffix || options?.fieldAddonRight"
-        [innerHTML]="options?.suffix || options?.fieldAddonRight"
-      ></span>
-      <mat-hint
-        *ngIf="options?.description && (!options?.showErrors || !options?.errorMessage)"
-        align="end"
-        [innerHTML]="options?.description"
-      ></mat-hint>
-      <mat-autocomplete *ngIf="options?.typeahead?.source">
-        <mat-option *ngFor="let word of options?.typeahead?.source" [value]="word">{{ word }}</mat-option>
-      </mat-autocomplete>
+      @if (!options?.notitle) {
+        <mat-label>{{ options?.title }}</mat-label>
+      }
+      @if (options?.prefix || options?.fieldAddonLeft) {
+        <span matPrefix [innerHTML]="options?.prefix || options?.fieldAddonLeft"></span>
+      }
+      @if (boundControl) {
+        <input
+          matInput
+          [formControl]="formControl"
+          [attr.aria-describedby]="'control' + layoutNode?._id + 'Status'"
+          [attr.list]="'control' + layoutNode?._id + 'Autocomplete'"
+          [attr.maxlength]="options?.maxLength"
+          [attr.minlength]="options?.minLength"
+          [attr.pattern]="options?.pattern"
+          [readonly]="options?.readonly ? 'readonly' : null"
+          [id]="'control' + layoutNode?._id"
+          [name]="controlName"
+          [placeholder]="options?.notitle ? options?.placeholder : options?.title"
+          [required]="options?.required"
+          [style.width]="'100%'"
+          [type]="layoutNode?.type"
+          (blur)="options.showErrors = true"
+        />
+      }
+      @if (!boundControl) {
+        <input
+          matInput
+          [attr.aria-describedby]="'control' + layoutNode?._id + 'Status'"
+          [attr.list]="'control' + layoutNode?._id + 'Autocomplete'"
+          [attr.maxlength]="options?.maxLength"
+          [attr.minlength]="options?.minLength"
+          [attr.pattern]="options?.pattern"
+          [disabled]="controlDisabled || options?.readonly"
+          [id]="'control' + layoutNode?._id"
+          [name]="controlName"
+          [placeholder]="options?.notitle ? options?.placeholder : options?.title"
+          [readonly]="options?.readonly ? 'readonly' : null"
+          [required]="options?.required"
+          [style.width]="'100%'"
+          [type]="layoutNode?.type"
+          [value]="controlValue"
+          (input)="updateValue($event)"
+          (blur)="options.showErrors = true"
+        />
+      }
+      @if (options?.suffix || options?.fieldAddonRight) {
+        <span matSuffix [innerHTML]="options?.suffix || options?.fieldAddonRight"></span>
+      }
+      @if (options?.description && (!options?.showErrors || !options?.errorMessage)) {
+        <mat-hint align="end" [innerHTML]="options?.description"></mat-hint>
+      }
+      @if (options?.typeahead?.source) {
+        <mat-autocomplete>
+          @for (word of options?.typeahead?.source; track word) {
+            <mat-option [value]="word">{{ word }}</mat-option>
+          }
+        </mat-autocomplete>
+      }
     </mat-form-field>
-    <mat-error *ngIf="options?.showErrors && options?.errorMessage" [innerHTML]="options?.errorMessage"></mat-error>`,
+    @if (options?.showErrors && options?.errorMessage) {
+      <mat-error [innerHTML]="options?.errorMessage"></mat-error>
+    }`,
   styles: [
     `
       mat-error {
@@ -101,7 +105,7 @@ export class MaterialInputComponent implements OnInit {
 
   constructor(
     @Inject(MAT_FORM_FIELD_DEFAULT_OPTIONS) @Optional() public matFormFieldDefaultOptions,
-    private jsf: JsonSchemaFormService
+    private jsf: JsonSchemaFormService,
   ) {}
 
   ngOnInit() {

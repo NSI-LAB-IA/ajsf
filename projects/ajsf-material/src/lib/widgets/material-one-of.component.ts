@@ -1,12 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
-import { JsonSchemaFormService } from '@ajsf/core';
+import { Component, Input, OnInit } from "@angular/core";
+import { AbstractControl } from "@angular/forms";
+import { JsonSchemaFormService } from "@ajsf/core";
 
 // TODO: Add this control
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'material-one-of-widget',
+  selector: "material-one-of-widget",
   template: ``,
 })
 export class MaterialOneOfComponent implements OnInit {
@@ -20,9 +20,7 @@ export class MaterialOneOfComponent implements OnInit {
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
 
-  constructor(
-    private jsf: JsonSchemaFormService
-  ) { }
+  constructor(private jsf: JsonSchemaFormService) {}
 
   ngOnInit() {
     this.options = this.layoutNode.options || {};

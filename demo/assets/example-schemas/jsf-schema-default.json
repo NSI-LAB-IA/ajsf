@@ -2,7 +2,7 @@
   "schema": {
     "friends": {
       "type": "array",
-      "default": [ "foo", "bar" ],
+      "default": ["foo", "bar"],
       "readOnly": true,
       "items": {
         "type": "string",

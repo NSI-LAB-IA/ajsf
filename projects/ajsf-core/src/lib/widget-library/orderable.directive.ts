@@ -1,12 +1,5 @@
-import {
-  Directive,
-  ElementRef,
-  Input,
-  NgZone,
-  OnInit
-  } from '@angular/core';
-import { JsonSchemaFormService } from '../json-schema-form.service';
-
+import { Directive, ElementRef, Input, NgZone, OnInit } from "@angular/core";
+import { JsonSchemaFormService } from "../json-schema-form.service";
 
 /**
  * OrderableDirective
@@ -31,7 +24,7 @@ import { JsonSchemaFormService } from '../json-schema-form.service';
  */
 @Directive({
   // tslint:disable-next-line:directive-selector
-  selector: '[orderable]',
+  selector: "[orderable]",
 })
 export class OrderableDirective implements OnInit {
   arrayLayoutIndex: string;
@@ -46,37 +39,38 @@ export class OrderableDirective implements OnInit {
   constructor(
     private elementRef: ElementRef,
     private jsf: JsonSchemaFormService,
-    private ngZone: NgZone
-  ) { }
+    private ngZone: NgZone,
+  ) {}
 
   ngOnInit() {
     if (this.orderable && this.layoutNode && this.layoutIndex && this.dataIndex) {
       this.element = this.elementRef.nativeElement;
       this.element.draggable = true;
-      this.arrayLayoutIndex = 'move:' + this.layoutIndex.slice(0, -1).toString();
+      this.arrayLayoutIndex = "move:" + this.layoutIndex.slice(0, -1).toString();
 
       this.ngZone.runOutsideAngular(() => {
-
         // Listeners for movable element being dragged:
 
-        this.element.addEventListener('dragstart', (event) => {
-          event.dataTransfer.effectAllowed = 'move';
-          event.dataTransfer.setData('text', '');
+        this.element.addEventListener("dragstart", (event) => {
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text", "");
           // Hack to bypass stupid HTML drag-and-drop dataTransfer protection
           // so drag source info will be available on dragenter
           const sourceArrayIndex = this.dataIndex[this.dataIndex.length - 1];
-          sessionStorage.setItem(this.arrayLayoutIndex, sourceArrayIndex + '');
+          sessionStorage.setItem(this.arrayLayoutIndex, sourceArrayIndex + "");
         });
 
-        this.element.addEventListener('dragover', (event) => {
-          if (event.preventDefault) { event.preventDefault(); }
-          event.dataTransfer.dropEffect = 'move';
+        this.element.addEventListener("dragover", (event) => {
+          if (event.preventDefault) {
+            event.preventDefault();
+          }
+          event.dataTransfer.dropEffect = "move";
           return false;
         });
 
         // Listeners for stationary items being dragged over:
 
-        this.element.addEventListener('dragenter', (event): void => {
+        this.element.addEventListener("dragenter", (event): void => {
           // Part 1 of a hack, inspired by Dragster, to simulate mouseover and mouseout
           // behavior while dragging items - http://bensmithett.github.io/dragster/
           if (this.overParentElement) {
@@ -88,14 +82,14 @@ export class OrderableDirective implements OnInit {
           const sourceArrayIndex = sessionStorage.getItem(this.arrayLayoutIndex);
           if (sourceArrayIndex !== null) {
             if (this.dataIndex[this.dataIndex.length - 1] < +sourceArrayIndex) {
-              this.element.classList.add('drag-target-top');
+              this.element.classList.add("drag-target-top");
             } else if (this.dataIndex[this.dataIndex.length - 1] > +sourceArrayIndex) {
-              this.element.classList.add('drag-target-bottom');
+              this.element.classList.add("drag-target-bottom");
             }
           }
         });
 
-        this.element.addEventListener('dragleave', (event) => {
+        this.element.addEventListener("dragleave", (event) => {
           // Part 2 of the Dragster hack
           if (this.overChildElement) {
             this.overChildElement = false;
@@ -105,14 +99,14 @@ export class OrderableDirective implements OnInit {
 
           const sourceArrayIndex = sessionStorage.getItem(this.arrayLayoutIndex);
           if (!this.overParentElement && !this.overChildElement && sourceArrayIndex !== null) {
-            this.element.classList.remove('drag-target-top');
-            this.element.classList.remove('drag-target-bottom');
+            this.element.classList.remove("drag-target-top");
+            this.element.classList.remove("drag-target-bottom");
           }
         });
 
-        this.element.addEventListener('drop', (event) => {
-          this.element.classList.remove('drag-target-top');
-          this.element.classList.remove('drag-target-bottom');
+        this.element.addEventListener("drop", (event) => {
+          this.element.classList.remove("drag-target-top");
+          this.element.classList.remove("drag-target-bottom");
           // Confirm that drop target is another item in the same array as source item
           const sourceArrayIndex = sessionStorage.getItem(this.arrayLayoutIndex);
           const destArrayIndex = this.dataIndex[this.dataIndex.length - 1];
@@ -123,7 +117,6 @@ export class OrderableDirective implements OnInit {
           sessionStorage.removeItem(this.arrayLayoutIndex);
           return false;
         });
-
       });
     }
   }

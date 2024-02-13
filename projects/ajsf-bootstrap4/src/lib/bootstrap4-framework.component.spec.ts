@@ -1,27 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import {
-  JsonSchemaFormModule,
-  JsonSchemaFormService,
-  WidgetLibraryModule
-} from '@ajsf/core';
-import { Bootstrap4FrameworkComponent } from './bootstrap4-framework.component';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { CommonModule } from "@angular/common";
+import { JsonSchemaFormModule, JsonSchemaFormService, WidgetLibraryModule } from "@ajsf/core";
+import { Bootstrap4FrameworkComponent } from "./bootstrap4-framework.component";
 
-describe('FwBootstrap4Component', () => {
+describe("FwBootstrap4Component", () => {
   let component: Bootstrap4FrameworkComponent;
   let fixture: ComponentFixture<Bootstrap4FrameworkComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        JsonSchemaFormModule,
-        CommonModule,
-        WidgetLibraryModule,
-      ],
+      imports: [JsonSchemaFormModule, CommonModule, WidgetLibraryModule],
       declarations: [Bootstrap4FrameworkComponent],
-      providers: [JsonSchemaFormService]
-    })
-      .compileComponents();
+      providers: [JsonSchemaFormService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,7 +24,7 @@ describe('FwBootstrap4Component', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

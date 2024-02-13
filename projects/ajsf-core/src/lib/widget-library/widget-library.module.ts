@@ -9,11 +9,7 @@ import { WindowRef } from "./window-ref.service";
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
-  declarations: [
-    ...BASIC_WIDGETS,
-    OrderableDirective,
-    TextareaAutoresizeDirective,
-  ],
+  declarations: [...BASIC_WIDGETS, OrderableDirective, TextareaAutoresizeDirective],
   providers: [WindowRef],
   exports: [...BASIC_WIDGETS, OrderableDirective, TextareaAutoresizeDirective],
 })

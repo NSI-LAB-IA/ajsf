@@ -248,7 +248,7 @@ export class JsonSchemaFormService {
       this.dataMap,
       this.dataRecursiveRefMap,
       this.arrayMap,
-      this.formOptions.returnEmptyFields
+      this.formOptions.returnEmptyFields,
     );
     this.isValid = this.validateFormData(this.data);
     this.validData = this.isValid ? this.data : null;
@@ -360,7 +360,7 @@ export class JsonSchemaFormService {
     value: any = {},
     values: any = {},
     key: number | string = null,
-    tpldata: any = null
+    tpldata: any = null,
   ) {
     if (typeof expression !== "string") {
       return "";
@@ -385,12 +385,12 @@ export class JsonSchemaFormService {
       return pointer[0] === "value" && JsonPointer.has(value, pointer.slice(1))
         ? JsonPointer.get(value, pointer.slice(1))
         : pointer[0] === "values" && JsonPointer.has(values, pointer.slice(1))
-        ? JsonPointer.get(values, pointer.slice(1))
-        : pointer[0] === "tpldata" && JsonPointer.has(tpldata, pointer.slice(1))
-        ? JsonPointer.get(tpldata, pointer.slice(1))
-        : JsonPointer.has(values, pointer)
-        ? JsonPointer.get(values, pointer)
-        : "";
+          ? JsonPointer.get(values, pointer.slice(1))
+          : pointer[0] === "tpldata" && JsonPointer.has(tpldata, pointer.slice(1))
+            ? JsonPointer.get(tpldata, pointer.slice(1))
+            : JsonPointer.has(values, pointer)
+              ? JsonPointer.get(values, pointer)
+              : "";
     }
     if (expression.indexOf("[idx]") > -1) {
       expression = expression.replace(/\[idx\]/g, <string>index);
@@ -437,7 +437,7 @@ export class JsonSchemaFormService {
             [childNode, "/options/legend"],
             [parentNode, "/options/title"],
             [parentNode, "/options/legend"],
-          ]
+          ],
     );
     if (!text) {
       return text;
@@ -453,7 +453,7 @@ export class JsonSchemaFormService {
           ctx.options.title || toTitleCase(ctx.layoutNode.name),
           this.getFormControlValue(this),
           (this.getFormControlGroup(this) || <any>{}).value,
-          ctx.dataIndex[ctx.dataIndex.length - 1]
+          ctx.dataIndex[ctx.dataIndex.length - 1],
         );
   }
 
@@ -480,7 +480,7 @@ export class JsonSchemaFormService {
         } catch (e) {
           result = true;
           console.error(
-            "condition functionBody errored out on evaluation: " + layoutNode.options.condition.functionBody
+            "condition functionBody errored out on evaluation: " + layoutNode.options.condition.functionBody,
           );
         }
       }
@@ -511,7 +511,7 @@ export class JsonSchemaFormService {
       ctx.formControl.statusChanges.subscribe(
         (status) =>
           (ctx.options.errorMessage =
-            status === "VALID" ? null : this.formatErrors(ctx.formControl.errors, ctx.options.validationMessages))
+            status === "VALID" ? null : this.formatErrors(ctx.formControl.errors, ctx.options.validationMessages)),
       );
       ctx.formControl.valueChanges.subscribe((value) => {
         if (!!value) {
@@ -546,8 +546,8 @@ export class JsonSchemaFormService {
               error[key] === true
                 ? addSpaces(key)
                 : error[key] === false
-                ? "Not " + addSpaces(key)
-                : addSpaces(key) + ": " + formatError(error[key])
+                  ? "Not " + addSpaces(key)
+                  : addSpaces(key) + ": " + formatError(error[key]),
             )
             .join(", ")
         : addSpaces(error.toString());
@@ -561,21 +561,24 @@ export class JsonSchemaFormService {
           typeof validationMessages === "string"
             ? validationMessages
             : // If custom error message is a function, return function result
-            typeof validationMessages[errorKey] === "function"
-            ? validationMessages[errorKey](errors[errorKey])
-            : // If custom error message is a string, replace placeholders and return
-            typeof validationMessages[errorKey] === "string"
-            ? // Does error message have any {{property}} placeholders?
-              !/{{.+?}}/.test(validationMessages[errorKey])
-              ? validationMessages[errorKey]
-              : // Replace {{property}} placeholders with values
-                Object.keys(errors[errorKey]).reduce(
-                  (errorMessage, errorProperty) =>
-                    errorMessage.replace(new RegExp("{{" + errorProperty + "}}", "g"), errors[errorKey][errorProperty]),
-                  validationMessages[errorKey]
-                )
-            : // If no custom error message, return formatted error data instead
-              addSpaces(errorKey) + " Error: " + formatError(errors[errorKey])
+              typeof validationMessages[errorKey] === "function"
+              ? validationMessages[errorKey](errors[errorKey])
+              : // If custom error message is a string, replace placeholders and return
+                typeof validationMessages[errorKey] === "string"
+                ? // Does error message have any {{property}} placeholders?
+                  !/{{.+?}}/.test(validationMessages[errorKey])
+                  ? validationMessages[errorKey]
+                  : // Replace {{property}} placeholders with values
+                    Object.keys(errors[errorKey]).reduce(
+                      (errorMessage, errorProperty) =>
+                        errorMessage.replace(
+                          new RegExp("{{" + errorProperty + "}}", "g"),
+                          errors[errorKey][errorProperty],
+                        ),
+                      validationMessages[errorKey],
+                    )
+                : // If no custom error message, return formatted error data instead
+                  addSpaces(errorKey) + " Error: " + formatError(errors[errorKey]),
         )
         .join("<br>")
     );
@@ -614,7 +617,7 @@ export class JsonSchemaFormService {
     const refPointer = removeRecursiveReferences(
       ctx.layoutNode.dataPointer + "/-",
       this.dataRecursiveRefMap,
-      this.arrayMap
+      this.arrayMap,
     );
     for (const checkboxItem of checkboxList) {
       if (checkboxItem.checked) {

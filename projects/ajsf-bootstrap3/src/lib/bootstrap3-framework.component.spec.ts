@@ -1,27 +1,18 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import {
-  JsonSchemaFormModule,
-  JsonSchemaFormService,
-  WidgetLibraryModule
-} from '@ajsf/core';
-import { Bootstrap3FrameworkComponent } from './bootstrap3-framework.component';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
+import { CommonModule } from "@angular/common";
+import { JsonSchemaFormModule, JsonSchemaFormService, WidgetLibraryModule } from "@ajsf/core";
+import { Bootstrap3FrameworkComponent } from "./bootstrap3-framework.component";
 
-describe('Bootstrap3FrameworkComponent', () => {
+describe("Bootstrap3FrameworkComponent", () => {
   let component: Bootstrap3FrameworkComponent;
   let fixture: ComponentFixture<Bootstrap3FrameworkComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        JsonSchemaFormModule,
-        CommonModule,
-        WidgetLibraryModule,
-      ],
+      imports: [JsonSchemaFormModule, CommonModule, WidgetLibraryModule],
       declarations: [Bootstrap3FrameworkComponent],
-      providers: [JsonSchemaFormService]
-    })
-      .compileComponents();
+      providers: [JsonSchemaFormService],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -33,7 +24,7 @@ describe('Bootstrap3FrameworkComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

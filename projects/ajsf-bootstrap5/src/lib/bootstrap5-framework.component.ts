@@ -28,7 +28,10 @@ export class Bootstrap5FrameworkComponent implements OnInit, OnChanges {
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
 
-  constructor(public changeDetector: ChangeDetectorRef, public jsf: JsonSchemaFormService) {}
+  constructor(
+    public changeDetector: ChangeDetectorRef,
+    public jsf: JsonSchemaFormService,
+  ) {}
 
   get showRemoveButton(): boolean {
     if (!this.options?.removable || this.options?.readonly || this.layoutNode.type === "$ref") {
@@ -44,10 +47,10 @@ export class Bootstrap5FrameworkComponent implements OnInit, OnChanges {
     return this.parentArray.items.length - 1 <= this.parentArray.options.minItems
       ? false
       : // For removable list items, allow removing any item
-      this.layoutNode.arrayItemType === "list"
-      ? true
-      : // For removable tuple items, only allow removing last item in list
-        this.layoutIndex[this.layoutIndex.length - 1] === this.parentArray.items.length - 2;
+        this.layoutNode.arrayItemType === "list"
+        ? true
+        : // For removable tuple items, only allow removing last item in list
+          this.layoutIndex[this.layoutIndex.length - 1] === this.parentArray.items.length - 2;
   }
 
   ngOnInit() {
@@ -122,8 +125,8 @@ export class Bootstrap5FrameworkComponent implements OnInit, OnChanges {
         this.layoutNode.type === "array"
           ? addClasses(this.options.htmlClass, "list-group")
           : this.layoutNode.arrayItem && this.layoutNode.type !== "$ref"
-          ? addClasses(this.options.htmlClass, "list-group-item")
-          : addClasses(this.options.htmlClass, "");
+            ? addClasses(this.options.htmlClass, "list-group-item")
+            : addClasses(this.options.htmlClass, "");
       this.widgetOptions.htmlClass = "";
       this.options.labelHtmlClass = addClasses(this.options.labelHtmlClass, "form-label");
       this.widgetOptions.activeClass = addClasses(this.widgetOptions.activeClass, "active");
@@ -169,7 +172,7 @@ export class Bootstrap5FrameworkComponent implements OnInit, OnChanges {
           this.widgetOptions.itemLabelHtmlClass = addClasses(this.widgetOptions.itemLabelHtmlClass, "btn");
           this.widgetOptions.itemLabelHtmlClass = addClasses(
             this.widgetOptions.itemLabelHtmlClass,
-            this.options.style || "btn-default"
+            this.options.style || "btn-default",
           );
           this.widgetOptions.fieldHtmlClass = addClasses(this.widgetOptions.fieldHtmlClass, "sr-only");
           break;
@@ -179,7 +182,7 @@ export class Bootstrap5FrameworkComponent implements OnInit, OnChanges {
           this.widgetOptions.fieldHtmlClass = addClasses(this.widgetOptions.fieldHtmlClass, "btn");
           this.widgetOptions.fieldHtmlClass = addClasses(
             this.widgetOptions.fieldHtmlClass,
-            this.options.style || "btn-info"
+            this.options.style || "btn-info",
           );
           break;
         // Containers - arrays and fieldsets
@@ -207,7 +210,7 @@ export class Bootstrap5FrameworkComponent implements OnInit, OnChanges {
           this.widgetOptions.fieldHtmlClass = addClasses(this.widgetOptions.fieldHtmlClass, "btn");
           this.widgetOptions.fieldHtmlClass = addClasses(
             this.widgetOptions.fieldHtmlClass,
-            this.options.style || "btn btn-outline-primary float-end mt-1"
+            this.options.style || "btn btn-outline-primary float-end mt-1",
           );
           this.options.icon = "fas fa-plus";
           break;

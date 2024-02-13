@@ -276,18 +276,18 @@ export function getInputType(schema, layoutNode: any = null) {
         inArray("object", schemaType) && hasOwn(schema, "properties")
           ? "object"
           : inArray("array", schemaType) && hasOwn(schema, "items")
-          ? "array"
-          : inArray("array", schemaType) && hasOwn(schema, "additionalItems")
-          ? "array"
-          : inArray("string", schemaType)
-          ? "string"
-          : inArray("number", schemaType)
-          ? "number"
-          : inArray("integer", schemaType)
-          ? "integer"
-          : inArray("boolean", schemaType)
-          ? "boolean"
-          : "unknown";
+            ? "array"
+            : inArray("array", schemaType) && hasOwn(schema, "additionalItems")
+              ? "array"
+              : inArray("string", schemaType)
+                ? "string"
+                : inArray("number", schemaType)
+                  ? "number"
+                  : inArray("integer", schemaType)
+                    ? "integer"
+                    : inArray("boolean", schemaType)
+                      ? "boolean"
+                      : "unknown";
     }
     if (schemaType === "boolean") {
       return "checkbox";
@@ -552,7 +552,7 @@ export function getTitleMapFromOneOf(schema: any = {}, flatList: boolean = null,
       if (
         flatList === true ||
         newTitleMap.some(
-          (title, index) => index && hasOwn(title, "group") && title.group === newTitleMap[index - 1].group
+          (title, index) => index && hasOwn(title, "group") && title.group === newTitleMap[index - 1].group,
         )
       ) {
         titleMap = newTitleMap;
@@ -638,7 +638,7 @@ export function resolveSchemaReferences(
   schemaRefLibrary,
   schemaRecursiveRefMap: Map<string, string>,
   dataRecursiveRefMap: Map<string, string>,
-  arrayMap: Map<string, number>
+  arrayMap: Map<string, number>,
 ) {
   if (!isObject(schema)) {
     console.error("resolveSchemaReferences error: schema must be an object.");
@@ -672,12 +672,12 @@ export function resolveSchemaReferences(
           ([fromRef2, toRef2]) =>
             JsonPointer.isSubPointer(toRef1, fromRef2, true) &&
             !JsonPointer.isSubPointer(toRef2, toRef1, true) &&
-            !refMapSet.has(fromRef1 + fromRef2.slice(toRef1.length) + "~~" + toRef2)
+            !refMapSet.has(fromRef1 + fromRef2.slice(toRef1.length) + "~~" + toRef2),
         )
         .forEach(([fromRef2, toRef2]) => {
           refMapSet.add(fromRef1 + fromRef2.slice(toRef1.length) + "~~" + toRef2);
           checkRefLinks = true;
-        })
+        }),
     );
   }
 
@@ -690,7 +690,7 @@ export function resolveSchemaReferences(
   // Second pass - create recursive versions of any other refs that link to recursive refs
   Array.from(refMap)
     .filter(([fromRef1, toRef1]) =>
-      Array.from(recursiveRefMap.keys()).every((fromRef2) => !JsonPointer.isSubPointer(fromRef1, fromRef2, true))
+      Array.from(recursiveRefMap.keys()).every((fromRef2) => !JsonPointer.isSubPointer(fromRef1, fromRef2, true)),
     )
     .forEach(([fromRef1, toRef1]) =>
       Array.from(recursiveRefMap)
@@ -698,11 +698,11 @@ export function resolveSchemaReferences(
           ([fromRef2, toRef2]) =>
             !recursiveRefMap.has(fromRef1 + fromRef2.slice(toRef1.length)) &&
             JsonPointer.isSubPointer(toRef1, fromRef2, true) &&
-            !JsonPointer.isSubPointer(toRef1, fromRef1, true)
+            !JsonPointer.isSubPointer(toRef1, fromRef1, true),
         )
         .forEach(([fromRef2, toRef2]) =>
-          recursiveRefMap.set(fromRef1 + fromRef2.slice(toRef1.length), fromRef1 + toRef2.slice(toRef1.length))
-        )
+          recursiveRefMap.set(fromRef1 + fromRef2.slice(toRef1.length), fromRef1 + toRef2.slice(toRef1.length)),
+        ),
     );
 
   // Create compiled schema by replacing all non-recursive $ref links with
@@ -746,7 +746,7 @@ export function resolveSchemaReferences(
         }
       }
     },
-    true
+    true,
   );
   return compiledSchema;
 }
@@ -766,7 +766,7 @@ export function getSubSchema(
   pointer: Pointer,
   schemaRefLibrary: object = null,
   schemaRecursiveRefMap: Map<string, string> = null,
-  usedPointers: string[] = []
+  usedPointers: string[] = [],
 ) {
   if (!schemaRefLibrary || !schemaRecursiveRefMap) {
     return JsonPointer.getCopy(schema, pointer);
@@ -823,7 +823,7 @@ export function getSubSchema(
       return subSchema;
     },
     true,
-    <string>pointer
+    <string>pointer,
   );
 }
 
@@ -863,8 +863,8 @@ export function fixRequiredArrayProperties(schema) {
     const itemsObject = hasOwn(schema.items, "properties")
       ? "items"
       : hasOwn(schema.additionalItems, "properties")
-      ? "additionalItems"
-      : null;
+        ? "additionalItems"
+        : null;
     if (
       itemsObject &&
       !hasOwn(schema[itemsObject], "required") &&

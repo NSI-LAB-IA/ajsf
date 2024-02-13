@@ -5,12 +5,12 @@
       "select": {
         "title": "Select without titleMap",
         "type": "string",
-        "enum": [ "a", "b", "c" ]
+        "enum": ["a", "b", "c"]
       },
       "select2": {
         "title": "Select with titleMap (old style)",
         "type": "string",
-        "enum": [ "a", "b", "c" ]
+        "enum": ["a", "b", "c"]
       },
       "noenum": {
         "type": "string",
@@ -21,22 +21,22 @@
         "type": "array",
         "items": {
           "type": "string",
-          "enum": [ "a", "b", "c" ]
+          "enum": ["a", "b", "c"]
         }
       },
       "array2": {
         "title": "Array with titleMap",
         "type": "array",
-        "default": [ "b", "c" ],
+        "default": ["b", "c"],
         "items": {
           "type": "string",
-          "enum": [ "a", "b", "c" ]
+          "enum": ["a", "b", "c"]
         }
       },
       "radios": {
         "title": "Basic radio button example",
         "type": "string",
-        "enum": [ "a", "b", "c" ]
+        "enum": ["a", "b", "c"]
       },
       "radiobuttons": {
         "title": "Radio buttons used to switch a boolean",
@@ -47,7 +47,8 @@
   },
   "form": [
     "select",
-    { "key": "select2",
+    {
+      "key": "select2",
       "type": "select",
       "titleMap": {
         "a": "A",
@@ -55,7 +56,8 @@
         "c": "C"
       }
     },
-    { "key": "noenum",
+    {
+      "key": "noenum",
       "type": "select",
       "titleMap": [
         { "value": "a", "name": "A" },
@@ -64,7 +66,8 @@
       ]
     },
     "array",
-    { "key": "array2",
+    {
+      "key": "array2",
       "type": "checkboxes",
       "titleMap": [
         { "value": "a", "name": "A" },
@@ -72,7 +75,8 @@
         { "value": "c", "name": "C" }
       ]
     },
-    { "key": "radios",
+    {
+      "key": "radios",
       "type": "radios",
       "titleMap": [
         { "value": "c", "name": "C" },
@@ -80,11 +84,12 @@
         { "value": "a", "name": "A" }
       ]
     },
-    { "key": "radiobuttons",
+    {
+      "key": "radiobuttons",
       "type": "radiobuttons",
       "titleMap": [
         { "name": "No way", "value": false },
-        { "name": "OK",     "value": true  }
+        { "name": "OK", "value": true }
       ]
     }
   ]

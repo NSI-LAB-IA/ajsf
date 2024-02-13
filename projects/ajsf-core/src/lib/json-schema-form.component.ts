@@ -174,7 +174,7 @@ export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges,
     private changeDetector: ChangeDetectorRef,
     private frameworkLibrary: FrameworkLibraryService,
     private widgetLibrary: WidgetLibraryService,
-    public jsf: JsonSchemaFormService
+    public jsf: JsonSchemaFormService,
   ) {}
 
   private resetScriptsAndStyleSheets() {
@@ -527,7 +527,7 @@ export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges,
         this.jsf.schemaRefLibrary,
         this.jsf.schemaRecursiveRefMap,
         this.jsf.dataRecursiveRefMap,
-        this.jsf.arrayMap
+        this.jsf.arrayMap,
       );
       if (hasOwn(this.jsf.schemaRefLibrary, "")) {
         this.jsf.hasRootReference = true;
@@ -622,7 +622,7 @@ export class JsonSchemaFormComponent implements ControlValueAccessor, OnChanges,
               delete value.options;
             }
           },
-          "top-down"
+          "top-down",
         );
       }
       return layout;

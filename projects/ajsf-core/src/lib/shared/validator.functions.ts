@@ -111,10 +111,10 @@ export function _mergeObjects(...objects) {
         mergedObject[key] = !isDefined(mergedValue)
           ? currentValue
           : key === "not" && isBoolean(mergedValue, "strict") && isBoolean(currentValue, "strict")
-          ? xor(mergedValue, currentValue)
-          : getType(mergedValue) === "object" && getType(currentValue) === "object"
-          ? _mergeObjects(mergedValue, currentValue)
-          : currentValue;
+            ? xor(mergedValue, currentValue)
+            : getType(mergedValue) === "object" && getType(currentValue) === "object"
+              ? _mergeObjects(mergedValue, currentValue)
+              : currentValue;
       }
     }
   }

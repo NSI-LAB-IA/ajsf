@@ -613,13 +613,13 @@ export class JsonValidators {
                     validator = JsonValidators[requirement](parameter);
                   }
                   return !isDefined(validator) ? null : validator(control.value[requiredField]);
-                })
+                }),
               );
               return isEmpty(requiredFieldErrors) ? null : { [requiredField]: requiredFieldErrors };
-            })
+            }),
           );
           return isEmpty(requiringFieldErrors) ? null : { [requiringField]: requiringFieldErrors };
-        })
+        }),
       );
       return isEmpty(allErrors) ? null : allErrors;
     };

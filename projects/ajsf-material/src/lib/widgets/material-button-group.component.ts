@@ -1,39 +1,51 @@
-import { AbstractControl } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
-import { JsonSchemaFormService, buildTitleMap } from '@ajsf/core';
-
+import { AbstractControl } from "@angular/forms";
+import { Component, Input, OnInit } from "@angular/core";
+import { JsonSchemaFormService, buildTitleMap } from "@ajsf/core";
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'material-button-group-widget',
-  template: `
-    <div>
-      <div *ngIf="options?.title">
+  selector: "material-button-group-widget",
+  template: ` <div>
+    @if (options?.title) {
+      <div>
         <label
           [attr.for]="'control' + layoutNode?._id"
           [class]="options?.labelHtmlClass || ''"
           [style.display]="options?.notitle ? 'none' : ''"
-          [innerHTML]="options?.title"></label>
+          [innerHTML]="options?.title"
+        ></label>
       </div>
-      <mat-button-toggle-group
-        [attr.aria-describedby]="'control' + layoutNode?._id + 'Status'"
-        [attr.readonly]="options?.readonly ? 'readonly' : null"
-        [attr.required]="options?.required"
-        [disabled]="controlDisabled || options?.readonly"
-        [name]="controlName"
-        [value]="controlValue"
-        [vertical]="!!options.vertical">
-        <mat-button-toggle *ngFor="let radioItem of radiosList"
+    }
+    <mat-button-toggle-group
+      [attr.aria-describedby]="'control' + layoutNode?._id + 'Status'"
+      [attr.readonly]="options?.readonly ? 'readonly' : null"
+      [attr.required]="options?.required"
+      [disabled]="controlDisabled || options?.readonly"
+      [name]="controlName"
+      [value]="controlValue"
+      [vertical]="!!options.vertical"
+    >
+      @for (radioItem of radiosList; track radioItem) {
+        <mat-button-toggle
           [id]="'control' + layoutNode?._id + '/' + radioItem?.name"
           [value]="radioItem?.value"
-          (click)="updateValue(radioItem?.value)">
+          (click)="updateValue(radioItem?.value)"
+        >
           <span [innerHTML]="radioItem?.name"></span>
         </mat-button-toggle>
-      </mat-button-toggle-group>
-      <mat-error *ngIf="options?.showErrors && options?.errorMessage"
-        [innerHTML]="options?.errorMessage"></mat-error>
-    </div>`,
-    styles: [` mat-error { font-size: 75%; } `],
+      }
+    </mat-button-toggle-group>
+    @if (options?.showErrors && options?.errorMessage) {
+      <mat-error [innerHTML]="options?.errorMessage"></mat-error>
+    }
+  </div>`,
+  styles: [
+    `
+      mat-error {
+        font-size: 75%;
+      }
+    `,
+  ],
 })
 export class MaterialButtonGroupComponent implements OnInit {
   formControl: AbstractControl;
@@ -48,16 +60,11 @@ export class MaterialButtonGroupComponent implements OnInit {
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
 
-  constructor(
-    private jsf: JsonSchemaFormService
-  ) { }
+  constructor(private jsf: JsonSchemaFormService) {}
 
   ngOnInit() {
     this.options = this.layoutNode.options || {};
-    this.radiosList = buildTitleMap(
-      this.options.titleMap || this.options.enumNames,
-      this.options.enum, true
-    );
+    this.radiosList = buildTitleMap(this.options.titleMap || this.options.enumNames, this.options.enum, true);
     this.jsf.initializeControl(this);
   }
 

@@ -26,22 +26,19 @@
         "type": "object",
         "properties": {
           "id": { "$ref": "#/definitions/int" },
-          "staffId": { "allOf" : [
-            { "$ref": "#/definitions/int" },
-            { "maximum": 5,
-              "title": "staffId (overriden maximum)" }
-          ] },
-          "languageId": { "allOf" : [
-            { "$ref": "#/definitions/valueItem" },
-            { "title": "languageId (object with custom title)" }
-          ] },
+          "staffId": {
+            "allOf": [{ "$ref": "#/definitions/int" }, { "maximum": 5, "title": "staffId (overriden maximum)" }]
+          },
+          "languageId": {
+            "allOf": [{ "$ref": "#/definitions/valueItem" }, { "title": "languageId (object with custom title)" }]
+          },
           "languageLevelId": { "$ref": "#/definitions/int" },
-          "languageName2": { "allOf" : [
-            { "$ref": "#/definitions/string" },
-            { "default": "ole",
-              "maxLength": 3,
-              "title": "languageName2 (custom default & maxLength)" }
-          ] },
+          "languageName2": {
+            "allOf": [
+              { "$ref": "#/definitions/string" },
+              { "default": "ole", "maxLength": 3, "title": "languageName2 (custom default & maxLength)" }
+            ]
+          },
           "languageLevelName": { "$ref": "#/definitions/dtoArray" }
         }
       }

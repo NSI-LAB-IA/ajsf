@@ -5,84 +5,21 @@ import { JsonSchemaFormService } from "@ajsf/core";
 @Component({
   // tslint:disable-next-line:component-selector
   selector: "flex-layout-section-widget",
-  template: ` <div
-      *ngIf="containerType === 'div'"
-      [class]="options?.htmlClass || ''"
-      [class.expandable]="options?.expandable && !expanded"
-      [class.expanded]="options?.expandable && expanded"
-    >
-      <label
-        *ngIf="sectionTitle"
-        [class]="'legend ' + (options?.labelHtmlClass || '')"
-        [innerHTML]="sectionTitle"
-        (click)="toggleExpanded()"
-      ></label>
-      <flex-layout-root-widget
-        *ngIf="expanded"
-        [layout]="layoutNode.items"
-        [dataIndex]="dataIndex"
-        [layoutIndex]="layoutIndex"
-        [isFlexItem]="getFlexAttribute('is-flex')"
-        [class.form-flex-column]="getFlexAttribute('flex-direction') === 'column'"
-        [class.form-flex-row]="getFlexAttribute('flex-direction') === 'row'"
-        [style.display]="getFlexAttribute('display')"
-        [style.flex-direction]="getFlexAttribute('flex-direction')"
-        [style.flex-wrap]="getFlexAttribute('flex-wrap')"
-        [style.justify-content]="getFlexAttribute('justify-content')"
-        [style.align-items]="getFlexAttribute('align-items')"
-        [style.align-content]="getFlexAttribute('align-content')"
-      ></flex-layout-root-widget>
-      <mat-error *ngIf="options?.showErrors && options?.errorMessage" [innerHTML]="options?.errorMessage"></mat-error>
-    </div>
-
-    <fieldset
-      *ngIf="containerType === 'fieldset'"
-      [class]="options?.htmlClass || ''"
-      [class.expandable]="options?.expandable && !expanded"
-      [class.expanded]="options?.expandable && expanded"
-      [disabled]="options?.readonly"
-    >
-      <legend
-        *ngIf="sectionTitle"
-        [class]="'legend ' + (options?.labelHtmlClass || '')"
-        [innerHTML]="sectionTitle"
-        (click)="toggleExpanded()"
-      ></legend>
-      <flex-layout-root-widget
-        *ngIf="expanded"
-        [layout]="layoutNode.items"
-        [dataIndex]="dataIndex"
-        [layoutIndex]="layoutIndex"
-        [isFlexItem]="getFlexAttribute('is-flex')"
-        [class.form-flex-column]="getFlexAttribute('flex-direction') === 'column'"
-        [class.form-flex-row]="getFlexAttribute('flex-direction') === 'row'"
-        [style.display]="getFlexAttribute('display')"
-        [style.flex-direction]="getFlexAttribute('flex-direction')"
-        [style.flex-wrap]="getFlexAttribute('flex-wrap')"
-        [style.justify-content]="getFlexAttribute('justify-content')"
-        [style.align-items]="getFlexAttribute('align-items')"
-        [style.align-content]="getFlexAttribute('align-content')"
-      ></flex-layout-root-widget>
-      <mat-error *ngIf="options?.showErrors && options?.errorMessage" [innerHTML]="options?.errorMessage"></mat-error>
-    </fieldset>
-
-    <mat-card
-      *ngIf="containerType === 'card'"
-      [ngClass]="options?.htmlClass || ''"
-      [class.expandable]="options?.expandable && !expanded"
-      [class.expanded]="options?.expandable && expanded"
-    >
-      <mat-card-header *ngIf="sectionTitle">
-        <legend
-          [class]="'legend ' + (options?.labelHtmlClass || '')"
-          [innerHTML]="sectionTitle"
-          (click)="toggleExpanded()"
-        ></legend>
-      </mat-card-header>
-      <mat-card-content *ngIf="expanded">
-        <fieldset [disabled]="options?.readonly">
+  template: ` @if (containerType === "div") {
+      <div
+        [class]="options?.htmlClass || ''"
+        [class.expandable]="options?.expandable && !expanded"
+        [class.expanded]="options?.expandable && expanded"
+      >
+        @if (sectionTitle) {
+          <label
+            [class]="'legend ' + (options?.labelHtmlClass || '')"
+            [innerHTML]="sectionTitle"
+            (click)="toggleExpanded()"
+          ></label>
+        }
+        @if (expanded) {
           <flex-layout-root-widget
-            *ngIf="expanded"
             [layout]="layoutNode.items"
             [dataIndex]="dataIndex"
             [layoutIndex]="layoutIndex"
@@ -96,47 +33,126 @@ import { JsonSchemaFormService } from "@ajsf/core";
             [style.align-items]="getFlexAttribute('align-items')"
             [style.align-content]="getFlexAttribute('align-content')"
           ></flex-layout-root-widget>
-        </fieldset>
-      </mat-card-content>
-      <mat-card-footer>
-        <mat-error *ngIf="options?.showErrors && options?.errorMessage" [innerHTML]="options?.errorMessage"></mat-error>
-      </mat-card-footer>
-    </mat-card>
+        }
+        @if (options?.showErrors && options?.errorMessage) {
+          <mat-error [innerHTML]="options?.errorMessage"></mat-error>
+        }
+      </div>
+    }
 
-    <mat-expansion-panel
-      *ngIf="containerType === 'expansion-panel'"
-      [expanded]="expanded"
-      [hideToggle]="!options?.expandable"
-    >
-      <mat-expansion-panel-header>
-        <mat-panel-title>
+    @if (containerType === "fieldset") {
+      <fieldset
+        [class]="options?.htmlClass || ''"
+        [class.expandable]="options?.expandable && !expanded"
+        [class.expanded]="options?.expandable && expanded"
+        [disabled]="options?.readonly"
+      >
+        @if (sectionTitle) {
           <legend
-            *ngIf="sectionTitle"
-            [class]="options?.labelHtmlClass"
+            [class]="'legend ' + (options?.labelHtmlClass || '')"
             [innerHTML]="sectionTitle"
             (click)="toggleExpanded()"
           ></legend>
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <fieldset [disabled]="options?.readonly">
-        <flex-layout-root-widget
-          *ngIf="expanded"
-          [layout]="layoutNode.items"
-          [dataIndex]="dataIndex"
-          [layoutIndex]="layoutIndex"
-          [isFlexItem]="getFlexAttribute('is-flex')"
-          [class.form-flex-column]="getFlexAttribute('flex-direction') === 'column'"
-          [class.form-flex-row]="getFlexAttribute('flex-direction') === 'row'"
-          [style.display]="getFlexAttribute('display')"
-          [style.flex-direction]="getFlexAttribute('flex-direction')"
-          [style.flex-wrap]="getFlexAttribute('flex-wrap')"
-          [style.justify-content]="getFlexAttribute('justify-content')"
-          [style.align-items]="getFlexAttribute('align-items')"
-          [style.align-content]="getFlexAttribute('align-content')"
-        ></flex-layout-root-widget>
+        }
+        @if (expanded) {
+          <flex-layout-root-widget
+            [layout]="layoutNode.items"
+            [dataIndex]="dataIndex"
+            [layoutIndex]="layoutIndex"
+            [isFlexItem]="getFlexAttribute('is-flex')"
+            [class.form-flex-column]="getFlexAttribute('flex-direction') === 'column'"
+            [class.form-flex-row]="getFlexAttribute('flex-direction') === 'row'"
+            [style.display]="getFlexAttribute('display')"
+            [style.flex-direction]="getFlexAttribute('flex-direction')"
+            [style.flex-wrap]="getFlexAttribute('flex-wrap')"
+            [style.justify-content]="getFlexAttribute('justify-content')"
+            [style.align-items]="getFlexAttribute('align-items')"
+            [style.align-content]="getFlexAttribute('align-content')"
+          ></flex-layout-root-widget>
+        }
+        @if (options?.showErrors && options?.errorMessage) {
+          <mat-error [innerHTML]="options?.errorMessage"></mat-error>
+        }
       </fieldset>
-      <mat-error *ngIf="options?.showErrors && options?.errorMessage" [innerHTML]="options?.errorMessage"></mat-error>
-    </mat-expansion-panel>`,
+    }
+
+    @if (containerType === "card") {
+      <mat-card
+        [ngClass]="options?.htmlClass || ''"
+        [class.expandable]="options?.expandable && !expanded"
+        [class.expanded]="options?.expandable && expanded"
+      >
+        @if (sectionTitle) {
+          <mat-card-header>
+            <legend
+              [class]="'legend ' + (options?.labelHtmlClass || '')"
+              [innerHTML]="sectionTitle"
+              (click)="toggleExpanded()"
+            ></legend>
+          </mat-card-header>
+        }
+        @if (expanded) {
+          <mat-card-content>
+            <fieldset [disabled]="options?.readonly">
+              @if (expanded) {
+                <flex-layout-root-widget
+                  [layout]="layoutNode.items"
+                  [dataIndex]="dataIndex"
+                  [layoutIndex]="layoutIndex"
+                  [isFlexItem]="getFlexAttribute('is-flex')"
+                  [class.form-flex-column]="getFlexAttribute('flex-direction') === 'column'"
+                  [class.form-flex-row]="getFlexAttribute('flex-direction') === 'row'"
+                  [style.display]="getFlexAttribute('display')"
+                  [style.flex-direction]="getFlexAttribute('flex-direction')"
+                  [style.flex-wrap]="getFlexAttribute('flex-wrap')"
+                  [style.justify-content]="getFlexAttribute('justify-content')"
+                  [style.align-items]="getFlexAttribute('align-items')"
+                  [style.align-content]="getFlexAttribute('align-content')"
+                ></flex-layout-root-widget>
+              }
+            </fieldset>
+          </mat-card-content>
+        }
+        <mat-card-footer>
+          @if (options?.showErrors && options?.errorMessage) {
+            <mat-error [innerHTML]="options?.errorMessage"></mat-error>
+          }
+        </mat-card-footer>
+      </mat-card>
+    }
+
+    @if (containerType === "expansion-panel") {
+      <mat-expansion-panel [expanded]="expanded" [hideToggle]="!options?.expandable">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            @if (sectionTitle) {
+              <legend [class]="options?.labelHtmlClass" [innerHTML]="sectionTitle" (click)="toggleExpanded()"></legend>
+            }
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <fieldset [disabled]="options?.readonly">
+          @if (expanded) {
+            <flex-layout-root-widget
+              [layout]="layoutNode.items"
+              [dataIndex]="dataIndex"
+              [layoutIndex]="layoutIndex"
+              [isFlexItem]="getFlexAttribute('is-flex')"
+              [class.form-flex-column]="getFlexAttribute('flex-direction') === 'column'"
+              [class.form-flex-row]="getFlexAttribute('flex-direction') === 'row'"
+              [style.display]="getFlexAttribute('display')"
+              [style.flex-direction]="getFlexAttribute('flex-direction')"
+              [style.flex-wrap]="getFlexAttribute('flex-wrap')"
+              [style.justify-content]="getFlexAttribute('justify-content')"
+              [style.align-items]="getFlexAttribute('align-items')"
+              [style.align-content]="getFlexAttribute('align-content')"
+            ></flex-layout-root-widget>
+          }
+        </fieldset>
+        @if (options?.showErrors && options?.errorMessage) {
+          <mat-error [innerHTML]="options?.errorMessage"></mat-error>
+        }
+      </mat-expansion-panel>
+    }`,
   styles: [
     `
       fieldset {

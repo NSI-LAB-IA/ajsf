@@ -62,7 +62,7 @@ export function buildFormGroupTemplate(
   setValues = true,
   schemaPointer = "",
   dataPointer = "",
-  templatePointer = ""
+  templatePointer = "",
 ) {
   const schema = JsonPointer.get(jsf.schema, schemaPointer);
   if (setValues) {
@@ -82,10 +82,10 @@ export function buildFormGroupTemplate(
     (hasOwn(schema, "properties") || hasOwn(schema, "additionalProperties")) && schemaType === "object"
       ? "FormGroup"
       : (hasOwn(schema, "items") || hasOwn(schema, "additionalItems")) && schemaType === "array"
-      ? "FormArray"
-      : !schemaType && hasOwn(schema, "$ref")
-      ? "$ref"
-      : "FormControl";
+        ? "FormArray"
+        : !schemaType && hasOwn(schema, "$ref")
+          ? "$ref"
+          : "FormControl";
   const shortDataPointer = removeRecursiveReferences(dataPointer, jsf.dataRecursiveRefMap, jsf.arrayMap);
   if (!jsf.dataMap.has(shortDataPointer)) {
     jsf.dataMap.set(shortDataPointer, new Map());
@@ -130,8 +130,8 @@ export function buildFormGroupTemplate(
                 setValues,
                 schemaPointer + (hasOwn(schema.properties, key) ? "/properties/" + key : "/additionalProperties"),
                 dataPointer + "/" + key,
-                templatePointer + "/controls/" + key
-              ))
+                templatePointer + "/controls/" + key,
+              )),
           );
         jsf.formOptions.fieldsRequired = setRequiredFields(schema, controls);
       }
@@ -155,18 +155,18 @@ export function buildFormGroupTemplate(
                 setValues,
                 schemaPointer + "/items/" + i,
                 dataPointer + "/" + i,
-                templatePointer + "/controls/" + i
-              )
+                templatePointer + "/controls/" + i,
+              ),
             );
           } else {
             const schemaRefPointer = removeRecursiveReferences(
               schemaPointer + "/items/" + i,
-              jsf.schemaRecursiveRefMap
+              jsf.schemaRecursiveRefMap,
             );
             const itemRefPointer = removeRecursiveReferences(
               shortDataPointer + "/" + i,
               jsf.dataRecursiveRefMap,
-              jsf.arrayMap
+              jsf.arrayMap,
             );
             const itemRecursive = itemRefPointer !== shortDataPointer + "/" + i;
             if (!hasOwn(jsf.templateRefLibrary, itemRefPointer)) {
@@ -177,7 +177,7 @@ export function buildFormGroupTemplate(
                 setValues,
                 schemaRefPointer,
                 itemRefPointer,
-                templatePointer + "/controls/" + i
+                templatePointer + "/controls/" + i,
               );
             }
             controls.push(
@@ -188,11 +188,11 @@ export function buildFormGroupTemplate(
                     setValues,
                     schemaPointer + "/items/" + i,
                     dataPointer + "/" + i,
-                    templatePointer + "/controls/" + i
+                    templatePointer + "/controls/" + i,
                   )
                 : itemRecursive
-                ? null
-                : cloneDeep(jsf.templateRefLibrary[itemRefPointer])
+                  ? null
+                  : cloneDeep(jsf.templateRefLibrary[itemRefPointer]),
             );
           }
         }
@@ -212,7 +212,7 @@ export function buildFormGroupTemplate(
         const itemRefPointer = removeRecursiveReferences(
           shortDataPointer + "/-",
           jsf.dataRecursiveRefMap,
-          jsf.arrayMap
+          jsf.arrayMap,
         );
         const itemRecursive = itemRefPointer !== shortDataPointer + "/-";
         if (!hasOwn(jsf.templateRefLibrary, itemRefPointer)) {
@@ -223,7 +223,7 @@ export function buildFormGroupTemplate(
             setValues,
             schemaRefPointer,
             itemRefPointer,
-            templatePointer + "/controls/-"
+            templatePointer + "/controls/-",
           );
         }
         // const itemOptions = jsf.dataMap.get(itemRefPointer) || new Map();
@@ -232,9 +232,9 @@ export function buildFormGroupTemplate(
           const arrayLength = Math.min(
             Math.max(
               itemRecursive ? 0 : itemOptions.get("tupleItems") + itemOptions.get("listItems") || 0,
-              Array.isArray(nodeValue) ? nodeValue.length : 0
+              Array.isArray(nodeValue) ? nodeValue.length : 0,
             ),
-            maxItems
+            maxItems,
           );
           for (let i = controls.length; i < arrayLength; i++) {
             controls.push(
@@ -245,11 +245,11 @@ export function buildFormGroupTemplate(
                     setValues,
                     schemaRefPointer,
                     dataPointer + "/-",
-                    templatePointer + "/controls/-"
+                    templatePointer + "/controls/-",
                   )
                 : itemRecursive
-                ? null
-                : cloneDeep(jsf.templateRefLibrary[itemRefPointer])
+                  ? null
+                  : cloneDeep(jsf.templateRefLibrary[itemRefPointer]),
             );
           }
         }
@@ -317,7 +317,7 @@ export function buildFormGroup(template: any): AbstractControl {
       case "FormArray":
         return new UntypedFormArray(
           filter(map(template.controls, (controls) => buildFormGroup(controls))),
-          validatorFn
+          validatorFn,
         );
       case "FormControl":
         return new UntypedFormControl(template.value, validatorFns);
@@ -389,7 +389,7 @@ export function setRequiredFields(schema: any, formControlTemplate: any): boolea
     fieldsRequired = true;
     let requiredArray = Array.isArray(schema.required) ? schema.required : [schema.required];
     requiredArray = forEach(requiredArray, (key) =>
-      JsonPointer.set(formControlTemplate, "/" + key + "/validators/required", [])
+      JsonPointer.set(formControlTemplate, "/" + key + "/validators/required", []),
     );
   }
   return fieldsRequired;
@@ -414,7 +414,7 @@ export function formatFormData(
   recursiveRefMap: Map<string, string>,
   arrayMap: Map<string, number>,
   returnEmptyFields = false,
-  fixErrors = false
+  fixErrors = false,
 ): any {
   if (formData === null || typeof formData !== "object") {
     return formData;

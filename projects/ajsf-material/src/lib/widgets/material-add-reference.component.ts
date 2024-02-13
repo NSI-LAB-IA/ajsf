@@ -1,20 +1,26 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { JsonSchemaFormService } from '@ajsf/core';
-
+import { ChangeDetectionStrategy, Component, Input, OnInit } from "@angular/core";
+import { JsonSchemaFormService } from "@ajsf/core";
 
 @Component({
   // tslint:disable-next-line:component-selector
-  selector: 'material-add-reference-widget',
-  template: `
-    <section [class]="options?.htmlClass || ''" align="end">
-      <button mat-raised-button *ngIf="showAddButton"
+  selector: "material-add-reference-widget",
+  template: ` <section [class]="options?.htmlClass || ''" align="end">
+    @if (showAddButton) {
+      <button
+        mat-raised-button
         [color]="options?.color || 'accent'"
         [disabled]="options?.readonly"
-        (click)="addItem($event)">
-        <span *ngIf="options?.icon" [class]="options?.icon"></span>
-        <span *ngIf="options?.title" [innerHTML]="buttonText"></span>
+        (click)="addItem($event)"
+      >
+        @if (options?.icon) {
+          <span [class]="options?.icon"></span>
+        }
+        @if (options?.title) {
+          <span [innerHTML]="buttonText"></span>
+        }
       </button>
-    </section>`,
+    }
+  </section>`,
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class MaterialAddReferenceComponent implements OnInit {
@@ -26,17 +32,14 @@ export class MaterialAddReferenceComponent implements OnInit {
   @Input() layoutIndex: number[];
   @Input() dataIndex: number[];
 
-  constructor(
-    private jsf: JsonSchemaFormService
-  ) { }
+  constructor(private jsf: JsonSchemaFormService) {}
 
   ngOnInit() {
     this.options = this.layoutNode.options || {};
   }
 
   get showAddButton(): boolean {
-    return !this.layoutNode.arrayItem ||
-      this.layoutIndex[this.layoutIndex.length - 1] < this.options.maxItems;
+    return !this.layoutNode.arrayItem || this.layoutIndex[this.layoutIndex.length - 1] < this.options.maxItems;
   }
 
   addItem(event) {
@@ -50,7 +53,6 @@ export class MaterialAddReferenceComponent implements OnInit {
       layoutIndex: this.layoutIndex.slice(0, -1),
       layoutNode: this.jsf.getParentNode(this),
     };
-    return parent.layoutNode.add ||
-      this.jsf.setArrayItemTitle(parent, this.layoutNode, this.itemCount);
+    return parent.layoutNode.add || this.jsf.setArrayItemTitle(parent, this.layoutNode, this.itemCount);
   }
 }
