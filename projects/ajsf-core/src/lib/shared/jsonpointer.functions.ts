@@ -138,7 +138,7 @@ export class JsonPointer {
    * // { subObject } subObject - the object with properties values
    * // { keysAndExpression } keysAndExpression - an object holding the expressions with
    */
-  private static performExpressionOnValue(keysAndExpression: any, cleanedValue: String, subObject: Object) {
+  private static performExpressionOnValue(keysAndExpression: any, cleanedValue: string, subObject: Object) {
     const propertyByKey = subObject[keysAndExpression.keyAndValue[0]];
     if (this.doComparisonByExpressionType(keysAndExpression.expressionType, propertyByKey, cleanedValue)) {
       return { passed: true, key: keysAndExpression.keyAndValue[0] };
@@ -150,8 +150,8 @@ export class JsonPointer {
   private static doComparisonByExpressionType(
     expressionType: ExpressionType,
     propertyByKey,
-    cleanedValue: String,
-  ): Boolean {
+    cleanedValue: string,
+  ): boolean {
     if (isEqual(expressionType)) {
       return propertyByKey === cleanedValue;
     }

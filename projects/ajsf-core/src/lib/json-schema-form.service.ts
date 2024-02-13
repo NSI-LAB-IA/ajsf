@@ -514,7 +514,7 @@ export class JsonSchemaFormService {
             status === "VALID" ? null : this.formatErrors(ctx.formControl.errors, ctx.options.validationMessages)),
       );
       ctx.formControl.valueChanges.subscribe((value) => {
-        if (!!value) {
+        if (value) {
           ctx.controlValue = value;
         }
       });
